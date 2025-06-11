@@ -33,7 +33,9 @@ namespace Books.EnterpriseBusiness.Layer.Entitys
 
         public DateTime? ModifiedDate { get; set; }
 
-  
+        // Propiedades de navegación (claves foráneas)
+        public virtual UserEntity User { get; set; }
+        public virtual BookEntity Book { get; set; }
 
     }
 }

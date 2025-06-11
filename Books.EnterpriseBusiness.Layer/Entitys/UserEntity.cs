@@ -25,8 +25,8 @@ namespace Books.EnterpriseBusiness.Layer.Entitys
 
         public DateTime? ModifiedDate { get; set; }
 
-        public string RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
 
     }
 

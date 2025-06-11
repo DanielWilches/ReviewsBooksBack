@@ -158,26 +158,30 @@ v1User.MapPost("/register", async (
     return Results.Ok("Usuario creado correctamente");
 });
 
-//v1User.MapPost("/login", async ([FromServices] UserServices<UserEntity> userController, [FromBody] UserEntity login) =>
-//{
-//    var user = await userController.Authenticate(login.UserName, login.PasswordHash);
-//    if (user == null)
-//        return Results.Unauthorized();
-//
-//    // Generar JWT
-//    var tokenHandler = new JwtSecurityTokenHandler();
-//    var key = Encoding.UTF8.GetBytes(jwtKey);
-//    var tokenDescriptor = new SecurityTokenDescriptor
-//    {
-//        Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Username) }),
-//        Expires = DateTime.UtcNow.AddHours(1),
-//        Issuer = jwtIssuer,
-//        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-//    };
-//    var token = tokenHandler.CreateToken(tokenDescriptor);
-//    var tokenString = tokenHandler.WriteToken(token);
-//
-//    return Results.Json(new { token = tokenString });
-//});
+
+v1User.MapPost("/api/login", async (
+    LoginModel login,
+    UserServices<UserEntity> userServices,
+    IConfiguration config) =>
+{
+    
+    var token = await userServices.LoginUserAsync(login.UserName, login.Password, jwtKey);
+
+    if (token == null)
+        return Results.Unauthorized();
+
+    return Results.Ok(new { token });
+});
+
+v1User.MapPost("/api/logout", async (
+    LoginModel login,
+    UserServices<UserEntity> userServices) =>
+{
+    var result = await userServices.LogoutAsync(login.UserName);
+    if (!result)
+        return Results.NotFound(new { mensaje = "Usuario no encontrado." });
+
+    return Results.Ok(new { mensaje = "Sesión cerrada correctamente." });
+});
 #endregion
 app.Run();
