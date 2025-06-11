@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
             return await _context.FindAsync<UserEntity>(id) ?? new UserEntity();
         }
 
-        public async Task<IEnumerable<UserEntity>> GetListAsync(Func<UserEntity, bool> predicate)
+        public async Task<IEnumerable<UserEntity>> GetListAsync(Expression<Func<UserEntity, bool>> predicate)
         {
             await _context.Users.FindAsync(predicate);
             return _context.Users.Where(predicate).AsEnumerable();

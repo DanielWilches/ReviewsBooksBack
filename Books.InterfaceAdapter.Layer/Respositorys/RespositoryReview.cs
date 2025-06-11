@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
             return await _context.FindAsync<ReviewEntity>(id) ?? new ReviewEntity();
         }
 
-        public async Task<IEnumerable<ReviewEntity>> GetListAsync(Func<ReviewEntity, bool> predicate)
+        public async Task<IEnumerable<ReviewEntity>> GetListAsync(Expression<Func<ReviewEntity, bool>> predicate)
         {
             await _context.Reviews.FindAsync(predicate);
             return _context.Reviews.Where(predicate).AsEnumerable();

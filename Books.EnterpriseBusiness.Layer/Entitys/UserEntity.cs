@@ -9,7 +9,9 @@ namespace Books.EnterpriseBusiness.Layer.Entitys
     public class UserEntity:IdentityUser<int>
 
     {
-     
+        // Los campos básicos ya están heredados de IdentityUser:
+        // Id, Email, UserName, etc.
+
         [Required]
         [StringLength(50)]
         public string Name { get; set; }

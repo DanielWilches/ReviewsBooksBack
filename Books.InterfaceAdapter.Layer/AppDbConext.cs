@@ -9,7 +9,7 @@ namespace Books.InterfaceAdapter.Layer
         {
         }
         
-        public DbSet<BookEntity> Books { get; set; }
+        public DbSet<BookEntity> books { get; set; }
         public DbSet<ReviewEntity> Reviews { get; set; }
         public DbSet<UserEntity> Users { get; set; }
 
@@ -33,9 +33,9 @@ namespace Books.InterfaceAdapter.Layer
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
-                entity.Property(e => e.Author).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Category).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.CreatedDate).IsRequired();
+                entity.Property(e => e.Author).HasMaxLength(100);
+                entity.Property(e => e.Category).HasMaxLength(50);
+                entity.Property(e => e.CreatedDate);
             });
 
             modelBuilder.Entity<ReviewEntity>(entity =>

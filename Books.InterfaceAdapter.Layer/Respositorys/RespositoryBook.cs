@@ -1,6 +1,8 @@
 ﻿using Books.ApplicationBusiness.Layer.Interfaces;
 using Books.EnterpriseBusiness.Layer.Entitys;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 
 namespace Books.InterfaceAdapter.Layer.Respositorys
@@ -9,9 +11,9 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
     {
         private readonly AppDbConext _context = dbContext;
 
-        public Task<IEnumerable<BookEntity>> GetAllAsync()
+        public async Task<IEnumerable<BookEntity>> GetAllAsync()
         {
-            return Task.FromResult(_context.Books.AsEnumerable());
+            return await _context.books.ToListAsync();
         }
 
         public async Task<BookEntity> GetByIdAsync(int id)
@@ -19,21 +21,21 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
             return await _context.FindAsync<BookEntity>(id) ?? new BookEntity();
         }
 
-        public async Task<IEnumerable<BookEntity>> GetListAsync(Func<BookEntity, bool> predicate)
+        public async Task<IEnumerable<BookEntity>> GetListAsync(Expression<Func<BookEntity, bool>> predicate)
         {
-            await _context.Books.FindAsync(predicate);
-            return _context.Books.Where(predicate).AsEnumerable();
+
+            return await dbContext.Set<BookEntity>().Where(predicate).ToListAsync();
         }
 
         public async Task AddAsync(BookEntity entity)
         {
-            await _context.Books.AddAsync(entity);
+            await _context.books.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(BookEntity entity)
         {
-          await _context.Books.Where(b => b.Id == entity.Id)
+          await _context.books.Where(b => b.Id == entity.Id)
                 .ExecuteUpdateAsync(b => b.SetProperty(b => b.Title, entity.Title)
                 .SetProperty(b => b.Author, entity.Author)
                 .SetProperty(b => b.Category, entity.Category)
@@ -44,13 +46,13 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
 
         public async Task DeleteAsync(int id)
         {
-            await _context.Books.Where(b => b.Id == id).ExecuteDeleteAsync();
+            await _context.books.Where(b => b.Id == id).ExecuteDeleteAsync();
             await _context.SaveChangesAsync();
         }
 
         public async Task<bool> ExistsAsync(int id)
         {
-            return (await _context.Books.FindAsync(id) ?? new BookEntity())?.Id != null;
+            return (await _context.books.FindAsync(id) ?? new BookEntity())?.Id != null;
         }
 
 
