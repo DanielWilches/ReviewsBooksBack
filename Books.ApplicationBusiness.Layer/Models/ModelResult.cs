@@ -16,6 +16,7 @@ namespace Books.EnterpriseBusiness.Layer.Models
         public string Message { get; set; } 
         public bool IsSuccess { get; set; }
         public List<T>? Data { get; set; }
+        public string Token { get ; set ; }
 
         public ModelResult()
         {
@@ -31,6 +32,13 @@ namespace Books.EnterpriseBusiness.Layer.Models
         public ModelResult(int _code, string _message)
         {
             Code = _code;
+            Message = _message;
+        }
+
+        public ModelResult(int _code,string token, string _message)
+        {
+            Code = _code;
+            Token = token;
             Message = _message;
         }
 

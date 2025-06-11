@@ -191,18 +191,5 @@ namespace Books.ApplicationBusiness.Layer
             return (ModelResult<T>)_modelResult;
 
         }
-
-        public  ModelResult<T> MapToModelResult<TSource, T>(List<TSource> source, int code, string message) where T : new()
-        {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<TSource, T>());
-            var mapper = config.CreateMapper();
-
-            return new ModelResult<T>(
-                code,
-                mapper.Map<List<T>>(source),
-                message
-            );
-        }
-
     }
 }

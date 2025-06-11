@@ -48,7 +48,7 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
 
         public async Task UpdateAsync(ReviewEntity entity)
         {
-            await _context.Reviews.Where(b => b.Id == entity.Id)
+            await _context.Reviews.Where(b => b.UserId == entity.UserId && b.Id == entity.Id && b.BookId == entity.BookId)
                 .ExecuteUpdateAsync(b => b
                     .SetProperty(b => b.ModifiedDate, DateTime.UtcNow)
                     .SetProperty(b => b.Rating, entity.Rating)

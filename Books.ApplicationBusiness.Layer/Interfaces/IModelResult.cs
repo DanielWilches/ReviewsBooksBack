@@ -11,6 +11,9 @@ namespace Books.ApplicationBusiness.Layer.Interfaces
         int Code { get; set; }
         List<T>? Data { get; set; }
         string Message { get; set; }
+        string Token{ get; set; }
+
         bool IsSuccess { get; }
     }
+
 }

@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Books.EnterpriseBusiness.Layer.Entitys;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Books.EnterpriseBusiness.Layer.Entitys;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Books.InterfaceAdapter.Layer
 {
@@ -13,7 +13,8 @@ namespace Books.InterfaceAdapter.Layer
         
         public DbSet<BookEntity> books { get; set; }
         public DbSet<ReviewEntity> Reviews { get; set; }
-        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserEntity> users { get; set; }
+        public DbSet<CustomUserProfile> CustomUserProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +49,19 @@ namespace Books.InterfaceAdapter.Layer
                 entity.Property(e => e.UserId).IsRequired();
                 entity.Property(e => e.BookId).IsRequired();
                       
+            });
+
+            modelBuilder.Entity<CustomUserProfile>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.IdentityUserId).IsRequired();
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.LastName).HasMaxLength(50);
+                entity.Property(e => e.CreatedDate).IsRequired();
+                entity.HasOne<UserEntity>()
+                      .WithMany()
+                      .HasForeignKey(e => e.IdentityUserId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
 

@@ -10,47 +10,47 @@ using System.Threading.Tasks;
 
 namespace Books.InterfaceAdapter.Layer.Respositorys
 {
-    public class RespositoryUser(AppDbConext dbContext) : IRepository<UserEntity>
+    public class RespositoryUser(AppDbConext dbContext) : IRepository<CustomUserProfile>
     {
         private readonly AppDbConext _context = dbContext;
 
-        public async Task<IEnumerable<UserEntity>> GetAllAsync()
+        public async Task<IEnumerable<CustomUserProfile>> GetAllAsync()
         {
-            return await Task.FromResult(_context.Users.AsEnumerable());
+            return await Task.FromResult(_context.CustomUserProfiles.AsEnumerable());
         }
 
-        public async Task<UserEntity> GetByIdAsync(int id)
+        public async Task<CustomUserProfile> GetByIdAsync(int id)
         {
-            return await _context.FindAsync<UserEntity>(id) ?? new UserEntity();
+            return await _context.FindAsync<CustomUserProfile>(id) ?? new CustomUserProfile();
         }
 
-        public async Task<IEnumerable<UserEntity>> GetListAsync(Expression<Func<UserEntity, bool>> predicate)
+        public async Task<IEnumerable<CustomUserProfile>> GetListAsync(Expression<Func<CustomUserProfile, bool>> predicate)
         {
-            await _context.Users.FindAsync(predicate);
-            return _context.Users.Where(predicate).AsEnumerable();
+            await _context.CustomUserProfiles.FindAsync(predicate);
+            return _context.CustomUserProfiles.Where(predicate).AsEnumerable();
         }
 
-        public async Task AddAsync(UserEntity entity)
+        public async Task AddAsync(CustomUserProfile entity)
         {
-            await _context.Users.AddAsync(entity);
+            await _context.CustomUserProfiles.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
 
 
-        public Task UpdateAsync(UserEntity entity)
+        public Task UpdateAsync(CustomUserProfile entity)
         {
             throw new NotImplementedException();
         }
 
         public async Task DeleteAsync(int id)
         {
-            await _context.Users.Where(b => b.Id == id).ExecuteDeleteAsync();
+            await _context.CustomUserProfiles.Where(b => b.Id == id).ExecuteDeleteAsync();
             await _context.SaveChangesAsync();
         }
 
         public async Task<bool> ExistsAsync(int id)
         {
-            return (await _context.Users.FindAsync(id) ?? new UserEntity())?.Id != null;
+            return (await _context.CustomUserProfiles.FindAsync(id) ?? new CustomUserProfile()).Id != null;
         } 
     }
 }

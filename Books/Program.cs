@@ -6,10 +6,14 @@ using Books.EnterpriseBusiness.Layer.Models;
 using Books.InterfaceAdapter.Layer;
 using Books.InterfaceAdapter.Layer.Respositorys;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Http;
 using System.Text;
 
 
@@ -59,19 +63,18 @@ builder.Services.AddScoped<BookServices<BookEntity>>();
 
 
 builder.Services.AddScoped<IRepository<ReviewEntity>, RespositoryReview>();
-builder.Services.AddScoped<ReviewController<ReviewEntity>>();
+builder.Services.AddScoped<IModelResult<ReviewEntity>, ModelResult<ReviewEntity>>();
+builder.Services.AddScoped<ReviewServices<ReviewEntity>>();
 
 
-builder.Services.AddScoped<IRepository<UserEntity>, RespositoryUser>();
-builder.Services.AddScoped<IModelResult<UserEntity>, ModelResult<UserEntity>>();
+builder.Services.AddScoped<IRepository<CustomUserProfile>, RespositoryUser>();
+builder.Services.AddScoped<IModelResult<CustomUserProfile>, ModelResult<CustomUserProfile>>();
 builder.Services.AddIdentity<UserEntity, IdentityRole<int>>().AddEntityFrameworkStores<AppDbConext>();
-builder.Services.AddScoped<UserServices<UserEntity>>();
+builder.Services.AddScoped<UserServices<CustomUserProfile>>();
 #endregion
 
 
 var app = builder.Build();
-
-
 
 
 // Configure the HTTP request pipeline.
@@ -147,35 +150,28 @@ var v1User = app.MapGroup($"{Constants.API_V1}/User")
     .WithTags("User V1");
 
 
-v1User.MapPost("/register", async (
-    [FromServices] UserServices<UserEntity> userService,
+v1User.MapPost("/Create", async (
+    [FromServices] UserServices<CustomUserProfile> userService,
     [FromBody] RegisterModel model) =>
 {
-    var result = await userService.CreateUserAsync(model);
-    if (!result.Succeeded)
-        return Results.BadRequest(result.Errors);
 
-    return Results.Ok("Usuario creado correctamente");
+    var result = await userService.CreateUserAsync(model);
+    return Results.Json(result, statusCode: result.Code);
 });
 
-
-v1User.MapPost("/api/login", async (
+v1User.MapPost("/login", async (
     LoginModel login,
-    UserServices<UserEntity> userServices,
+    UserServices<CustomUserProfile> userServices,
     IConfiguration config) =>
 {
     
-    var token = await userServices.LoginUserAsync(login.UserName, login.Password, jwtKey);
-
-    if (token == null)
-        return Results.Unauthorized();
-
-    return Results.Ok(new { token });
+    var result = await userServices.LoginUserAsync(login.UserName, login.Password, jwtKey);
+    return Results.Json(result, statusCode: result.Code);
 });
 
-v1User.MapPost("/api/logout", async (
+v1User.MapPost("/logout", async (
     LoginModel login,
-    UserServices<UserEntity> userServices) =>
+    UserServices<CustomUserProfile> userServices) =>
 {
     var result = await userServices.LogoutAsync(login.UserName);
     if (!result)
@@ -183,5 +179,56 @@ v1User.MapPost("/api/logout", async (
 
     return Results.Ok(new { mensaje = "Sesión cerrada correctamente." });
 });
+#endregion
+
+
+#region endpoints reviews v1Reviews
+var v1Reviews = app.MapGroup($"{Constants.API_V1}/reviews")
+    .WithTags("Reviews V1");
+
+// Endpoint para agregar una review
+v1Reviews.MapPost("/", async (
+    [FromServices] ReviewServices<ReviewEntity> reviewServices,
+    [FromBody] ReviewEntity review) =>
+{
+    var result = await reviewServices.AddReviewAsync(review);
+    return Results.Json(result, statusCode: result.Code);
+})
+.WithName("AddReview")
+.WithOpenApi();
+
+// Endpoint para obtener reviews por usuario
+v1Reviews.MapGet("/user/{userId:int}", async (
+    [FromServices] ReviewServices<ReviewEntity> reviewServices,
+    int userId) =>
+{
+    var result = await reviewServices.GetReviewsByUser(userId);
+    return Results.Json(result, statusCode: result.Code);
+})
+.WithName("GetReviewsByUser")
+.WithOpenApi();
+
+// Endpoint para obtener reviews por libro
+v1Reviews.MapGet("/book/{bookId:int}", async (
+    [FromServices] ReviewServices<ReviewEntity> reviewServices,
+    int bookId) =>
+{
+    var result = await reviewServices.GetReviewsByBook(bookId);
+    return Results.Json(result, statusCode: result.Code);
+})
+.WithName("GetReviewsByBook")
+.WithOpenApi();
+
+// Endpoint para actualizar una review
+v1Reviews.MapPut("/", async (
+    [FromServices] ReviewServices<ReviewEntity> reviewServices,
+    [FromBody] ReviewEntity review) =>
+{
+    var result = await reviewServices.UpdateReviewAsync(review);
+    return Results.Json(result, statusCode: result.Code);
+})
+.WithName("UpdateReview")
+.WithOpenApi();
+
 #endregion
 app.Run();
