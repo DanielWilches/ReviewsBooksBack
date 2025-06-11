@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Books.EnterpriseBusiness.Layer.Entitys;   
+using Books.EnterpriseBusiness.Layer.Entitys;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Books.InterfaceAdapter.Layer
 {
-    public class AppDbConext: DbContext
+    public class AppDbConext : IdentityDbContext<UserEntity, IdentityRole<int>, int>
     {
         public AppDbConext(DbContextOptions<AppDbConext> options) : base(options)
         {
