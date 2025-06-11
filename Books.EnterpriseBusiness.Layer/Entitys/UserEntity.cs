@@ -28,9 +28,7 @@ namespace Books.EnterpriseBusiness.Layer.Entitys
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
-    }
-
-    
+    }    
 }
 
 

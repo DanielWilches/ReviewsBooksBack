@@ -21,7 +21,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+    );
+});
 
 #region  DbContext Configuration
 builder.Services.AddDbContext<AppDbConext>(options =>
@@ -29,6 +37,7 @@ builder.Services.AddDbContext<AppDbConext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString(Constants.DEV_CONNECTION));
 });
 #endregion
+
 
 
 #region authencation and authorization
@@ -85,7 +94,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 

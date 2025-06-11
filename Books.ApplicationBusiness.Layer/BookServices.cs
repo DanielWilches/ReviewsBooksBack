@@ -35,6 +35,7 @@ namespace Books.ApplicationBusiness.Layer
                 else
                 {
                     _modelResult.Data = books.OfType<T>().ToList();
+                    
                 }
 
             }
@@ -96,7 +97,7 @@ namespace Books.ApplicationBusiness.Layer
 
             try
             {
-                var books = await _repository.GetListAsync(b => b.Author == Author);
+                var books = await _repository.GetListAsync(b => b.Author.ToUpper() == Author.ToUpper());
                 if (books == null || !books.Any())
                 {
                     _modelResult.Code = (int)CodesResponse.NotFound;
@@ -131,7 +132,7 @@ namespace Books.ApplicationBusiness.Layer
             }
             try
             {
-                var books = await _repository.GetListAsync(b =>  b.Title == Title);
+                var books = await _repository.GetListAsync(b =>  b.Title.ToUpper() == Title.ToUpper());
                 if (books == null || !books.Any())
                 {
                     _modelResult.Code = (int)CodesResponse.NotFound;
@@ -167,7 +168,7 @@ namespace Books.ApplicationBusiness.Layer
             }
             try
             {
-                var books = await _repository.GetListAsync(b => b.Category == Category);
+                var books = await _repository.GetListAsync(b => b.Category.ToUpper() == Category.ToUpper());
                 if (books == null || !books.Any())
                 {
                     _modelResult.Code = (int)CodesResponse.NotFound;
