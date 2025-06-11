@@ -6,12 +6,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Books.EnterpriseBusiness.Layer.Entitys
 {
-    internal class UserEntity:IdentityUser<int>
+    public class UserEntity:IdentityUser<int>
 
     {
-        // Los campos básicos ya están heredados de IdentityUser:
-        // Id, Email, UserName, etc.
-
+     
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
@@ -25,11 +23,8 @@ namespace Books.EnterpriseBusiness.Layer.Entitys
 
         public DateTime? ModifiedDate { get; set; }
 
-        // Refresh token (para JWT)
         public string RefreshToken { get; set; }
         public DateTime RefreshTokenExpiryTime { get; set; }
-
-        public virtual ICollection<ReviewEntity>?Reviews { get; set; }
 
     }
 

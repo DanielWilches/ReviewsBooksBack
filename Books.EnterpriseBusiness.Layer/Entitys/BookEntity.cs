@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Books.EnterpriseBusiness.Layer.Entitys
 {
-    public class BookEntity
+    public  class BookEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,9 +28,6 @@ namespace Books.EnterpriseBusiness.Layer.Entitys
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public DateTime? ModifiedDate { get; set; }
-        public virtual ICollection<ReviewEntity>? Reviews { get; set; }
-
-
 
     }
 }

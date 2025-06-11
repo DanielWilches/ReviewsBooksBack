@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Books.ApplicationBusiness.Layer
 {
-    public class ReviewController
+    public class ReviewController<T>
     {
         public void AddReviewByBook() { }
         public void GetReviewsByUser(){}

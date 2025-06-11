@@ -1,6 +1,6 @@
 ﻿namespace Books.ApplicationBusiness.Layer
 {
-    public class UserController
+    public class UserController <T>
     {
         public void CreateUser (string username, string password)
         {

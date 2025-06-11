@@ -1,0 +1,53 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Books.EnterpriseBusiness.Layer.Entitys;   
+
+namespace Books.InterfaceAdapter.Layer
+{
+    public class AppDbConext: DbContext
+    {
+        public AppDbConext(DbContextOptions<AppDbConext> options) : base(options)
+        {
+        }
+        
+        public DbSet<BookEntity> Books { get; set; }
+        public DbSet<ReviewEntity> Reviews { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<UserEntity>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.CreatedDate).IsRequired();
+                entity.Property(e => e.ModifiedDate);
+                entity.Property(e => e.RefreshToken);
+                entity.Property(e => e.RefreshTokenExpiryTime);
+
+            });
+            
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<BookEntity>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Author).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Category).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.CreatedDate).IsRequired();
+            });
+
+            modelBuilder.Entity<ReviewEntity>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Rating).IsRequired();
+                entity.Property(e => e.CreatedDate).IsRequired();
+                entity.Property(e => e.UserId).IsRequired();
+                entity.Property(e => e.BookId).IsRequired();
+                      
+            });
+        }
+
+    }
+}

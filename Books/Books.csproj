@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Books.ApplicationBusiness.Layer\Books.ApplicationBusiness.Layer.csproj" />
+    <ProjectReference Include="..\Books.EnterpriseBusiness.Layer\Books.EnterpriseBusiness.Layer.csproj" />
+    <ProjectReference Include="..\Books.InterfaceAdapter.Layer\Books.InterfaceAdapter.Layer.csproj" />
+  </ItemGroup>
+
 </Project>
