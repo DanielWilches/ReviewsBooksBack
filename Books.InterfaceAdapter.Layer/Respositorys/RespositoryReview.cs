@@ -25,8 +25,7 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
 
         public async Task<IEnumerable<ReviewEntity>> GetListAsync(Expression<Func<ReviewEntity, bool>> predicate)
         {
-            await _context.Reviews.FindAsync(predicate);
-            return _context.Reviews.Where(predicate).AsEnumerable();
+            return await _context.Reviews.Where(predicate).ToListAsync();
         }
 
         public async Task AddAsync(ReviewEntity entity)
