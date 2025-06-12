@@ -34,7 +34,9 @@ builder.Services.AddCors(options =>
 #region  DbContext Configuration
 builder.Services.AddDbContext<AppDbConext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString(Constants.DEV_CONNECTION));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString(Constants.DEV_CONNECTION),
+        b => b.MigrationsAssembly("Books.InterfaceAdapter.Layer") );
 });
 #endregion
 
