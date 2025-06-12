@@ -24,7 +24,7 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
         public async Task<IEnumerable<BookEntity>> GetListAsync(Expression<Func<BookEntity, bool>> predicate)
         {
 
-            return await dbContext.Set<BookEntity>().Where(predicate).ToListAsync();
+            return await _context.Set<BookEntity>().Where(predicate).ToListAsync();
         }
 
         public async Task AddAsync(BookEntity entity)

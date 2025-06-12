@@ -60,8 +60,10 @@ namespace Books.ApplicationBusiness.Layer
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
+                var CustomUuser = await _repository.GetListAsync(r => r.IdentityUserId == user.Id);
 
                 _modelResult.Code = (int)CodesResponse.OK;
+                _modelResult.Data = CustomUuser.ToList();
                 _modelResult.Message = $"{Constants.MSG_SUCCESS} User logged in successfully";
                 _modelResult.Token = tokenHandler.WriteToken(token);
             }

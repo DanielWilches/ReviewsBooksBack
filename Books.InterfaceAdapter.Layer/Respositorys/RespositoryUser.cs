@@ -26,8 +26,7 @@ namespace Books.InterfaceAdapter.Layer.Respositorys
 
         public async Task<IEnumerable<CustomUserProfile>> GetListAsync(Expression<Func<CustomUserProfile, bool>> predicate)
         {
-            await _context.CustomUserProfiles.FindAsync(predicate);
-            return _context.CustomUserProfiles.Where(predicate).AsEnumerable();
+            return await _context.CustomUserProfiles.Where(predicate).ToListAsync();
         }
 
         public async Task AddAsync(CustomUserProfile entity)
