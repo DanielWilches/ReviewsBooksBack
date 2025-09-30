@@ -1,13 +1,18 @@
-﻿using Books.ApplicationBusiness.Layer.Interfaces;
-using Books.EnterpriseBusiness.Layer.Constants;
-using Books.EnterpriseBusiness.Layer.Entitys;
-using Books.EnterpriseBusiness.Layer.Enums;
-using Books.EnterpriseBusiness.Layer.Models;
+﻿#region using directives
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Xml.Linq;
+#endregion
+
+#region Project Usings
+using Books.EnterpriseBusiness.Layer.Enums;
+using Books.EnterpriseBusiness.Layer.Models;
+using Books.EnterpriseBusiness.Layer.Entitys;
+using Books.EnterpriseBusiness.Layer.Constants;
+using Books.ApplicationBusiness.Layer.Interfaces;
+#endregion
+
 
 namespace Books.ApplicationBusiness.Layer
 {

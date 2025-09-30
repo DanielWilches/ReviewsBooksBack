@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using Books.ApplicationBusiness.Layer.Interfaces;
-using Books.EnterpriseBusiness.Layer.Constants;
-using Books.EnterpriseBusiness.Layer.Entitys;
+﻿#region Project Usings
 using Books.EnterpriseBusiness.Layer.Enums;
 using Books.EnterpriseBusiness.Layer.Models;
-using System.Collections.Generic;
-using static System.Reflection.Metadata.BlobBuilder;
+using Books.EnterpriseBusiness.Layer.Entitys;
+using Books.EnterpriseBusiness.Layer.Constants;
+using Books.ApplicationBusiness.Layer.Interfaces;
+#endregion
 
 
 namespace Books.ApplicationBusiness.Layer
