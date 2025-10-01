@@ -1,6 +1,6 @@
-﻿using Books.InterfaceAdapter.Layer;
+﻿using Books.Domain.Layer.Constants;
 using Microsoft.EntityFrameworkCore;
-using Books.EnterpriseBusiness.Layer.Constants;
+using Books.Infrastructure.Layer.Persistence;
 
 namespace BooksPresentation.DataBaseConfiguration
 {

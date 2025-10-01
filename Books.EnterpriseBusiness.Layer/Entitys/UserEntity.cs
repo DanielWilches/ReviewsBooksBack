@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Books.EnterpriseBusiness.Layer.Entitys
+namespace Books.Domain.Layer.Entitys
 {
     public class UserEntity:IdentityUser<int>
 

@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
-using Books.ApplicationBusiness.Layer;
-using Books.EnterpriseBusiness.Layer.Entitys;
-using Books.EnterpriseBusiness.Layer.Models;
-using Books.EnterpriseBusiness.Layer.Constants;
+using Books.Domain.Layer.Models;
+using Books.Domain.Layer.Entitys;
+using Books.Application.Layer.Services;
+using Books.Domain.Layer.Constants;
 
 namespace BooksPresentation.Controllers
 {

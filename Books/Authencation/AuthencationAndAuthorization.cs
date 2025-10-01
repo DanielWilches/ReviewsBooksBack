@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
-using Books.EnterpriseBusiness.Layer.Constants;
+using Books.Domain.Layer.Constants;
 
 namespace BooksPresentation.Authencation
 {

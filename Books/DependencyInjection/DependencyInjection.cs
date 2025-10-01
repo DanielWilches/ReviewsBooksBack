@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Identity;
 #endregion
 
 #region project Usings
-using Books.InterfaceAdapter.Layer;
-using Books.ApplicationBusiness.Layer;
-using Books.EnterpriseBusiness.Layer.Models;
-using Books.EnterpriseBusiness.Layer.Entitys;
-using Books.InterfaceAdapter.Layer.Respositorys;
-using Books.ApplicationBusiness.Layer.Interfaces;
+using Books.Domain.Layer.Entitys;
+using Books.Domain.Layer.Models;
+using Books.Domain.Layer.Interfaces;
+using Books.Application.Layer.Services;
+using Books.Infrastructure.Layer.Persistence;
+using Books.Infrastructure.Layer.Respositorys;
 #endregion
 
 namespace BooksPresentation.DependencyInjection

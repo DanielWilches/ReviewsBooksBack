@@ -6,15 +6,15 @@ using System.IdentityModel.Tokens.Jwt;
 #endregion
 
 #region Project Usings
-using Books.EnterpriseBusiness.Layer.Enums;
-using Books.EnterpriseBusiness.Layer.Models;
-using Books.EnterpriseBusiness.Layer.Entitys;
-using Books.EnterpriseBusiness.Layer.Constants;
-using Books.ApplicationBusiness.Layer.Interfaces;
+using Books.Domain.Layer.Models;
+using Books.Domain.Layer.Entitys;
+using Books.Domain.Layer.Enums;
+using Books.Domain.Layer.Interfaces;
+using Books.Domain.Layer.Constants;
 #endregion
 
 
-namespace Books.ApplicationBusiness.Layer
+namespace Books.Application.Layer.Services
 {
     public class UserServices <T> where T : CustomUserProfile
     {

@@ -1,8 +1,8 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Books.ApplicationBusiness.Layer;
-using Books.EnterpriseBusiness.Layer.Entitys;
-using Books.EnterpriseBusiness.Layer.Models;
+using Books.Domain.Layer.Models;
+using Books.Domain.Layer.Entitys;
+using Books.Application.Layer.Services;
 
 namespace BooksPresentation.Controllers
 {
