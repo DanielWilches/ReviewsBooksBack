@@ -1,13 +1,6 @@
-﻿using Books.ApplicationBusiness.Layer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Books.Domain.Layer.Interfaces;
 
-namespace Books.EnterpriseBusiness.Layer.Models
+namespace Books.Application.Layer.DTOs
 {
     public class ModelResult<T> : IModelResult<T>
     {

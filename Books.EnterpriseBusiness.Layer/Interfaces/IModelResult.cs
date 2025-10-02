@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Books.ApplicationBusiness.Layer.Interfaces
+namespace Books.Domain.Layer.Interfaces
 {
     public interface IModelResult<T>
     {

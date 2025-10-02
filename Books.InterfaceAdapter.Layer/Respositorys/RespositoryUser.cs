@@ -1,14 +1,11 @@
-﻿using Books.ApplicationBusiness.Layer.Interfaces;
-using Books.EnterpriseBusiness.Layer.Entitys;
+﻿using System.Linq.Expressions;
+using Books.Domain.Layer.Entitys;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Books.Infrastructure.Layer.Persistence;
+using Books.Domain.Layer.Interfaces;
 
-namespace Books.InterfaceAdapter.Layer.Respositorys
+
+namespace Books.Infrastructure.Layer.Respositorys
 {
     public class RespositoryUser(AppDbConext dbContext) : IRepository<CustomUserProfile>
     {

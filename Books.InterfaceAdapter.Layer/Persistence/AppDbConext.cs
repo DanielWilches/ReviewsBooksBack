@@ -1,9 +1,9 @@
-﻿using Books.EnterpriseBusiness.Layer.Entitys;
+﻿using Books.Domain.Layer.Entitys;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Books.InterfaceAdapter.Layer
+namespace Books.Infrastructure.Layer.Persistence
 {
     public class AppDbConext : IdentityDbContext<UserEntity, IdentityRole<int>, int>
     {

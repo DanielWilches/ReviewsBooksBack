@@ -1,14 +1,10 @@
-﻿using Books.ApplicationBusiness.Layer.Interfaces;
-using Books.EnterpriseBusiness.Layer.Entitys;
+﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Books.Domain.Layer.Interfaces;
+using Books.Domain.Layer.Entitys;
+using Books.Infrastructure.Layer.Persistence;
 
-namespace Books.InterfaceAdapter.Layer.Respositorys
+namespace Books.Infrastructure.Layer.Respositorys
 {
     public class RespositoryReview(AppDbConext dbContext) : IRepository<ReviewEntity>
     {

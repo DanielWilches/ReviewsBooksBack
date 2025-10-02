@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Books.EnterpriseBusiness.Layer.Entitys
+namespace Books.Domain.Layer.Entitys
 {
     public  class BookEntity
     {

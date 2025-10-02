@@ -8,13 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Books.ApplicationBusiness.Layer\Books.ApplicationBusiness.Layer.csproj" />
-    <ProjectReference Include="..\Books.EnterpriseBusiness.Layer\Books.EnterpriseBusiness.Layer.csproj" />
+    <ProjectReference Include="..\Books.ApplicationBusiness.Layer\Books.Application.Layer.csproj" />
+    <ProjectReference Include="..\Books.EnterpriseBusiness.Layer\Books.Domain.Layer.csproj" />
   </ItemGroup>
 
 </Project>
