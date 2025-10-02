@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Books.Application.Layer.DTOs
 {
-    public class BookModel
+    public class BookDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

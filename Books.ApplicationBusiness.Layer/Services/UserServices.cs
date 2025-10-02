@@ -20,34 +20,34 @@ namespace Books.Application.Layer.Services
     {
         private readonly UserManager<UserEntity> _userManager;
         private readonly IRepository<T> _repository;
-        private readonly IModelResult<T> _modelResult;
+        private readonly IResultDto<T> _ResultDto;
 
-        public UserServices(UserManager<UserEntity> userManager , IRepository<T> repository, IModelResult<T> modelResult)
+        public UserServices(UserManager<UserEntity> userManager , IRepository<T> repository, IResultDto<T> ResultDto)
         {
             _userManager = userManager;
             _repository = repository;
-            _modelResult = modelResult;
+            _ResultDto = ResultDto;
         }
 
-        public async Task<ModelResult<T>> LoginUserAsync(string username, string password, string jwtKey)
+        public async Task<ResultDto<T>> LoginUserAsync(string username, string password, string jwtKey)
         {
             try
             {
                 var user = await _userManager.FindByNameAsync(username);
                 if (user == null)
                 {
-                    _modelResult.Code = (int)CodesResponse.Unauthorized;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} User or password not found ";
-                    return (ModelResult<T>)_modelResult;
+                    _ResultDto.Code = (int)CodesResponse.Unauthorized;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} User or password not found ";
+                    return (ResultDto<T>)_ResultDto;
                 }
 
 
                 var passwordValid = await _userManager.CheckPasswordAsync(user, password);
                 if (!passwordValid)
                 {
-                    _modelResult.Code = (int)CodesResponse.Unauthorized;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} User or password not found ";
-                    return (ModelResult<T>)_modelResult;
+                    _ResultDto.Code = (int)CodesResponse.Unauthorized;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} User or password not found ";
+                    return (ResultDto<T>)_ResultDto;
                 }
 
 
@@ -67,25 +67,25 @@ namespace Books.Application.Layer.Services
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var CustomUuser = await _repository.GetListAsync(r => r.IdentityUserId == user.Id);
 
-                _modelResult.Code = (int)CodesResponse.OK;
-                _modelResult.Data = CustomUuser.ToList();
-                _modelResult.Message = $"{Constants.MSG_SUCCESS} User logged in successfully";
-                _modelResult.Token = tokenHandler.WriteToken(token);
+                _ResultDto.Code = (int)CodesResponse.OK;
+                _ResultDto.Data = CustomUuser.ToList();
+                _ResultDto.Message = $"{Constants.MSG_SUCCESS} User logged in successfully";
+                _ResultDto.Token = tokenHandler.WriteToken(token);
             }
             catch (Exception ex )
             {
-                _modelResult.Token = string.Empty;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} An error occurred while logging in the user";
-                _modelResult.Code = (int)CodesResponse.InternalServerError;
+                _ResultDto.Token = string.Empty;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} An error occurred while logging in the user";
+                _ResultDto.Code = (int)CodesResponse.InternalServerError;
                 Console.WriteLine($"An error occurred while logging in the user: {ex.Message}");
             }
             ;
-            return (ModelResult<T>)_modelResult;
+            return (ResultDto<T>)_ResultDto;
         }
 
-        public async Task<ModelResult<T>> CreateUserAsync(RegisterModel user)
+        public async Task<ResultDto<T>> CreateUserAsync(RegisterDto user)
         {
-           _modelResult.Code = (int)CodesResponse.OK;
+           _ResultDto.Code = (int)CodesResponse.OK;
 
             try
             {
@@ -120,17 +120,17 @@ namespace Books.Application.Layer.Services
                 }
 
 
-                _modelResult.Code = result.Succeeded ? (int)CodesResponse.OK : (int)CodesResponse.BadRequest;
-                _modelResult.Message = result.Succeeded ? $"{Constants.MSG_SUCCESS} User created successfully" : $"{Constants.MSG_FAILURE} User creation failed";
+                _ResultDto.Code = result.Succeeded ? (int)CodesResponse.OK : (int)CodesResponse.BadRequest;
+                _ResultDto.Message = result.Succeeded ? $"{Constants.MSG_SUCCESS} User created successfully" : $"{Constants.MSG_FAILURE} User creation failed";
             }
             catch (Exception ex )
             {
-                _modelResult.Code = (int)CodesResponse.InternalServerError;
+                _ResultDto.Code = (int)CodesResponse.InternalServerError;
 
                 Console.WriteLine($"An error occurred while creating the user: {ex.Message}");
             }
             
-            return (ModelResult<T>)_modelResult; 
+            return (ResultDto<T>)_ResultDto; 
         }
 
         private Task AddUserToRepository(T user)

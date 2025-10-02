@@ -2,7 +2,7 @@
 
 namespace Books.Application.Layer.DTOs
 {
-    public class ModelResult<T> : IModelResult<T>
+    public class ResultDto<T> : IResultDto<T>
     {
         public int Code { get; set; }
         
@@ -11,33 +11,33 @@ namespace Books.Application.Layer.DTOs
         public List<T>? Data { get; set; }
         public string Token { get ; set ; }
 
-        public ModelResult()
+        public ResultDto()
         {
          
         }
-        public ModelResult(int code, List<T> data, string message)
+        public ResultDto(int code, List<T> data, string message)
         {
             Code = code;
             Data = data;
             Message = message;
         }
        
-        public ModelResult(int _code, string _message)
+        public ResultDto(int _code, string _message)
         {
             Code = _code;
             Message = _message;
         }
 
-        public ModelResult(int _code,string token, string _message)
+        public ResultDto(int _code,string token, string _message)
         {
             Code = _code;
             Token = token;
             Message = _message;
         }
 
-        public static ModelResult<T> AddMessage(int Code, List<T> data, string message)
+        public static ResultDto<T> AddMessage(int Code, List<T> data, string message)
         {
-            return new ModelResult<T>(Code, data, message);
+            return new ResultDto<T>(Code, data, message);
         }
     }
 }

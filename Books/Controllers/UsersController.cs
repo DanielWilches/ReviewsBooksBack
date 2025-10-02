@@ -2,7 +2,8 @@
 using Asp.Versioning;
 using Books.Application.Layer.DTOs;
 using Books.Domain.Layer.Entitys;
-using Books.Application.Layer.Services;
+using MediatR;
+using Books.Application.Layer.Querys.Users;
 using Books.Domain.Layer.Constants;
 
 namespace BooksPresentation.Controllers
@@ -13,12 +14,12 @@ namespace BooksPresentation.Controllers
     [Route("api/v{version:apiVersion}/user")]
     public class UsersController : ControllerBase
     {
-        private readonly UserServices<CustomUserProfile> _userService;
+        private readonly ISender _sender;
         private readonly string _jwtKey;
 
-        public UsersController(UserServices<CustomUserProfile> userService, IConfiguration configuration)
+        public UsersController(ISender sender, IConfiguration configuration)
         {
-            _userService = userService;
+            _sender = sender;
             _jwtKey = configuration[Constants.JWT_KEY] ?? "u7!xPz$2kL9@wQe4rT6yBvN8mC5sJ1hG2DOD#4";
         }
 
@@ -27,9 +28,9 @@ namespace BooksPresentation.Controllers
         /// </summary>
         [HttpPost("create")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<ModelResult<CustomUserProfile>>> CreateUser([FromBody] RegisterModel model)
+        public async Task<ActionResult<ResultDto<CustomUserProfile>>> CreateUser([FromBody] RegisterDto model)
         {
-            var result = await _userService.CreateUserAsync(model);
+            var result = await _sender.Send(new CreateUserCommand(model));
             return StatusCode(result.Code, result);
         }
 
@@ -38,9 +39,9 @@ namespace BooksPresentation.Controllers
         /// </summary>
         [HttpPost("login")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<ModelResult<CustomUserProfile>>> Login([FromBody] LoginModel login)
+        public async Task<ActionResult<ResultDto<CustomUserProfile>>> Login([FromBody] LoginDto login)
         {
-            var result = await _userService.LoginUserAsync(login.UserName, login.Password, _jwtKey);
+            var result = await _sender.Send(new LoginUserCommand(login.UserName, login.Password, _jwtKey));
             return StatusCode(result.Code, result);
         }
 
@@ -49,13 +50,11 @@ namespace BooksPresentation.Controllers
         /// </summary>
         [HttpPost("logout")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult> Logout([FromBody] LoginModel login)
+        public async Task<ActionResult> Logout([FromBody] LoginDto login)
         {
-            var result = await _userService.LogoutAsync(login.UserName);
-            
+            var result = await _sender.Send(new LogoutUserCommand(login.UserName));
             if (!result)
                 return NotFound(new { mensaje = "Usuario no encontrado." });
-
             return Ok(new { mensaje = "Sesión cerrada correctamente." });
         }
     }

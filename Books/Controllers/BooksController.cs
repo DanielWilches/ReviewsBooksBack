@@ -1,8 +1,12 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
 using Books.Application.Layer.DTOs;
-using Books.Domain.Layer.Entitys;
-using Books.Application.Layer.Services;
+using Books.Application.Layer.Querys.GetAllBooks;
+using Books.Application.Layer.Querys.GetBookByauthor;
+using Books.Application.Layer.Querys.GetBookById;
+using Books.Application.Layer.Querys.GetBookByTitle;
+using Books.Application.Layer.Querys.GetBooksByCategory;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BooksPresentation.Controllers
 {
@@ -10,23 +14,18 @@ namespace BooksPresentation.Controllers
     [ApiVersion("1.0")]
     [Produces("application/json")]
     [Route("api/v{version:apiVersion}/books")]
-    public class BooksController : ControllerBase
+    public class BooksController : ApiBaseController
     {
-        private readonly BookServices<BookEntity> _bookServices;
-
-        public BooksController(BookServices<BookEntity> bookServices)
-        {
-            _bookServices = bookServices;
-        }
+        public BooksController(ISender sender) : base(sender) { }
 
         /// <summary>
         /// Obtiene todos los libros
         /// </summary>
         [HttpGet]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<ModelResult<BookEntity>>> GetAllBooks()
+        public async Task<ActionResult<ResultDto<BookDto>>> GetAllBooks()
         {
-            var result = await _bookServices.GetAllBooks();
+            var result = await _sender.Send(new GetAllBooksQuery());
             return StatusCode(result.Code, result);
         }
 
@@ -35,9 +34,9 @@ namespace BooksPresentation.Controllers
         /// </summary>
         [HttpGet("{id}")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<ModelResult<BookEntity>>> GetBookById(string id)
+        public async Task<ActionResult<ResultDto<BookDto>>> GetBookById(string id)
         {
-            var result = await _bookServices.GetBookById(id);
+            var result = await _sender.Send(new GetBookByIdQuery(id));
             return StatusCode(result.Code, result);
         }
 
@@ -46,9 +45,9 @@ namespace BooksPresentation.Controllers
         /// </summary>
         [HttpGet("author/{author}")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<ModelResult<BookEntity>>> GetBooksByAuthor(string author)
+        public async Task<ActionResult<ResultDto<BookDto>>> GetBooksByAuthor(string author)
         {
-            var result = await _bookServices.GetBookByauthor(author);
+            var result = await _sender.Send(new GetBookByAuthorQuery(author));
             return StatusCode(result.Code, result);
         }
 
@@ -57,9 +56,9 @@ namespace BooksPresentation.Controllers
         /// </summary>
         [HttpGet("title/{title}")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<ModelResult<BookEntity>>> GetBooksByTitle(string title)
+        public async Task<ActionResult<ResultDto<BookDto>>> GetBooksByTitle(string title)
         {
-            var result = await _bookServices.GetBookByTitle(title);
+            var result = await _sender.Send(new GetBookByTitleQuery(title));
             return StatusCode(result.Code, result);
         }
 
@@ -68,9 +67,9 @@ namespace BooksPresentation.Controllers
         /// </summary>
         [HttpGet("category/{category}")]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<ModelResult<BookEntity>>> GetBooksByCategory(string category)
+        public async Task<ActionResult<ResultDto<BookDto>>> GetBooksByCategory(string category)
         {
-            var result = await _bookServices.GetBooksByCategory(category);
+            var result = await _sender.Send(new GetBooksByCategoryQuery(category));
             return StatusCode(result.Code, result);
         }
     }

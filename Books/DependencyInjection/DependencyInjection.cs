@@ -9,6 +9,7 @@ using Books.Domain.Layer.Interfaces;
 using Books.Application.Layer.Services;
 using Books.Infrastructure.Layer.Persistence;
 using Books.Infrastructure.Layer.Respositorys;
+using Books.Application.Layer.Querys.Books.GetAllBooks;
 #endregion
 
 namespace BooksPresentation.DependencyInjection
@@ -24,16 +25,18 @@ namespace BooksPresentation.DependencyInjection
             services.AddIdentity<UserEntity, IdentityRole<int>>().AddEntityFrameworkStores<AppDbConext>();
 
             services.AddScoped<IRepository<BookEntity>, RespositoryBook>();
-            services.AddScoped<IModelResult<BookEntity>, ModelResult<BookEntity>>();
+            services.AddScoped<IResultDto<BookEntity>, ResultDto<BookEntity>>();
             services.AddScoped<BookServices<BookEntity>>();
 
             services.AddScoped<IRepository<ReviewEntity>, RespositoryReview>();
-            services.AddScoped<IModelResult<ReviewEntity>, ModelResult<ReviewEntity>>();
+            services.AddScoped<IResultDto<ReviewEntity>, ResultDto<ReviewEntity>>();
             services.AddScoped<ReviewServices<ReviewEntity>>();
 
             services.AddScoped<IRepository<CustomUserProfile>, RespositoryUser>();
-            services.AddScoped<IModelResult<CustomUserProfile>, ModelResult<CustomUserProfile>>();
+            services.AddScoped<IResultDto<CustomUserProfile>, ResultDto<CustomUserProfile>>();
             services.AddScoped<UserServices<CustomUserProfile>>();
+
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetAllBooksQuery>());
         }
 
     }

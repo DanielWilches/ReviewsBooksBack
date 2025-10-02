@@ -12,86 +12,85 @@ namespace Books.Application.Layer.Services
     public class BookServices<T> where T : BookEntity 
     {
         private readonly IRepository<T> _repository;
-        private readonly IModelResult<T> _modelResult;
+        private readonly IResultDto<T> _ResultDto;
 
-        public BookServices(IRepository<T> repository, IModelResult<T> modelResult)
+        public BookServices(IRepository<T> repository, IResultDto<T> ResultDto)
         {
             _repository = repository;
-            _modelResult = modelResult;
+            _ResultDto = ResultDto;
         }
-        public async Task<ModelResult<T>> GetAllBooks() 
+        public async Task<ResultDto<T>> GetAllBooks() 
         {
-            _modelResult.Code = (int)CodesResponse.OK;
+            _ResultDto.Code = (int)CodesResponse.OK;
 
             try
             {
                 var books = await _repository.GetAllAsync();
                 if (books == null || !books.Any())
                 {
-                    _modelResult.Code = (int)CodesResponse.OK;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} No books found";
+                    _ResultDto.Code = (int)CodesResponse.OK;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} No books found";
                 }
                 else
                 {
-                    _modelResult.Data = books.OfType<T>().ToList();
+                    _ResultDto.Data = books.OfType<T>().ToList();
                     
                 }
 
             }
             catch (Exception ex)
             {
-                _modelResult.Code = (int)CodesResponse.InternalServerError;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
+                _ResultDto.Code = (int)CodesResponse.InternalServerError;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
 
                 Console.WriteLine($"An error occurred while retrieving books: {ex.Message}");                
             }
 
-            return (ModelResult<T>)_modelResult;
+            return (ResultDto<T>)_ResultDto;
         }
-        public async Task<ModelResult<T>> GetBookById(string Id) 
+        public async Task<ResultDto<T>> GetBookById(string Id) 
         {
-            _modelResult.Code = (int)CodesResponse.OK;
+            _ResultDto.Code = (int)CodesResponse.OK;
             try
             {
                 if(string.IsNullOrEmpty(Id) || !int.TryParse(Id, out int bookId))
                 {
-                    _modelResult.Code = (int)CodesResponse.BadRequest;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} Invalid book ID provided";
-                    return (ModelResult<T>)_modelResult;
+                    _ResultDto.Code = (int)CodesResponse.BadRequest;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} Invalid book ID provided";
+                    return (ResultDto<T>)_ResultDto;
                 }
 
                 var book = await _repository.GetByIdAsync(bookId);
 
                 if (book == null)
                 {
-                    _modelResult.Code = (int)CodesResponse.NotFound;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} Book not found";
+                    _ResultDto.Code = (int)CodesResponse.NotFound;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} Book not found";
                 }
                 else
                 {
-                    _modelResult.Data = [book as T];
-                    _modelResult.Message = Constants.MSG_SUCCESS;
+                    _ResultDto.Data = [book as T];
+                    _ResultDto.Message = Constants.MSG_SUCCESS;
                 }
             }
             catch (Exception ex)
             {
-                _modelResult.Code = (int)CodesResponse.InternalServerError;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
+                _ResultDto.Code = (int)CodesResponse.InternalServerError;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
 
                 Console.WriteLine($"An error occurred while retrieving books: {ex.Message}");
             }
 
-            return (ModelResult<T>)_modelResult;
+            return (ResultDto<T>)_ResultDto;
         }
-
-        public async Task<ModelResult<T>> GetBookByauthor(string Author) 
+        public async Task<ResultDto<T>> GetBookByauthor(string Author) 
         {
-            _modelResult.Code = (int)CodesResponse.OK;
+            _ResultDto.Code = (int)CodesResponse.OK;
             if (string.IsNullOrEmpty(Author))
             {
-                _modelResult.Code = (int)CodesResponse.BadRequest;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} Author name cannot be null or empty";
-                return (ModelResult<T>)_modelResult;
+                _ResultDto.Code = (int)CodesResponse.BadRequest;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} Author name cannot be null or empty";
+                return (ResultDto<T>)_ResultDto;
             }
 
             try
@@ -99,96 +98,96 @@ namespace Books.Application.Layer.Services
                 var books = await _repository.GetListAsync(b => b.Author.ToUpper() == Author.ToUpper());
                 if (books == null || !books.Any())
                 {
-                    _modelResult.Code = (int)CodesResponse.NotFound;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} No books found for author";
+                    _ResultDto.Code = (int)CodesResponse.NotFound;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} No books found for author";
                 }
                 else
                 {
-                    _modelResult.Data = books.OfType<T>().ToList();
-                    _modelResult.Message = Constants.MSG_SUCCESS;
+                    _ResultDto.Data = books.OfType<T>().ToList();
+                    _ResultDto.Message = Constants.MSG_SUCCESS;
                 }
             }
             catch (Exception ex)
             {
-                _modelResult.Code = (int)CodesResponse.InternalServerError;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
+                _ResultDto.Code = (int)CodesResponse.InternalServerError;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
 
                 Console.WriteLine($"An error occurred while retrieving books: {ex.Message}");
             }
 
-            return (ModelResult<T>)_modelResult;
+            return (ResultDto<T>)_ResultDto;
 
         }
-        public async Task<ModelResult<T>> GetBookByTitle(string  Title) 
+        public async Task<ResultDto<T>> GetBookByTitle(string  Title) 
         {
 
-            _modelResult.Code = (int)CodesResponse.OK;
+            _ResultDto.Code = (int)CodesResponse.OK;
             if (string.IsNullOrEmpty(Title))
             {
-                _modelResult.Code = (int)CodesResponse.BadRequest;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} Title cannot be null or empty";
-                return (ModelResult<T>)_modelResult;
+                _ResultDto.Code = (int)CodesResponse.BadRequest;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} Title cannot be null or empty";
+                return (ResultDto<T>)_ResultDto;
             }
             try
             {
                 var books = await _repository.GetListAsync(b =>  b.Title.ToUpper() == Title.ToUpper());
                 if (books == null || !books.Any())
                 {
-                    _modelResult.Code = (int)CodesResponse.NotFound;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} No books found with the specified title";
+                    _ResultDto.Code = (int)CodesResponse.NotFound;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} No books found with the specified title";
                 }
                 else
                 {
-                    _modelResult.Data = books.OfType<T>().ToList();
-                    _modelResult.Message = Constants.MSG_SUCCESS;
+                    _ResultDto.Data = books.OfType<T>().ToList();
+                    _ResultDto.Message = Constants.MSG_SUCCESS;
                 }
 
             }
             catch (Exception ex)
             {
-                _modelResult.Code = (int)CodesResponse.InternalServerError;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
+                _ResultDto.Code = (int)CodesResponse.InternalServerError;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
 
                 Console.WriteLine($"An error occurred while retrieving books: {ex.Message}");
             }
 
-            return (ModelResult<T>)_modelResult;
+            return (ResultDto<T>)_ResultDto;
 
         }
-        public async Task<ModelResult<T>> GetBooksByCategory(string Category) 
+        public async Task<ResultDto<T>> GetBooksByCategory(string Category) 
         {
 
-            _modelResult.Code = (int)CodesResponse.OK;
+            _ResultDto.Code = (int)CodesResponse.OK;
             if (string.IsNullOrEmpty(Category))
             {
-                _modelResult.Code = (int)CodesResponse.BadRequest;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} Category cannot be null or empty";
-                return (ModelResult<T>)_modelResult;
+                _ResultDto.Code = (int)CodesResponse.BadRequest;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} Category cannot be null or empty";
+                return (ResultDto<T>)_ResultDto;
             }
             try
             {
                 var books = await _repository.GetListAsync(b => b.Category.ToUpper() == Category.ToUpper());
                 if (books == null || !books.Any())
                 {
-                    _modelResult.Code = (int)CodesResponse.NotFound;
-                    _modelResult.Message = $"{Constants.MSG_FAILURE} No books found in the specified category";
+                    _ResultDto.Code = (int)CodesResponse.NotFound;
+                    _ResultDto.Message = $"{Constants.MSG_FAILURE} No books found in the specified category";
                 }
                 else
                 {
-                    _modelResult.Data = books.OfType<T>().ToList();
-                    _modelResult.Message = Constants.MSG_SUCCESS;
+                    _ResultDto.Data = books.OfType<T>().ToList();
+                    _ResultDto.Message = Constants.MSG_SUCCESS;
                 }
 
             }
             catch (Exception ex)
             {
-                _modelResult.Code = (int)CodesResponse.InternalServerError;
-                _modelResult.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
+                _ResultDto.Code = (int)CodesResponse.InternalServerError;
+                _ResultDto.Message = $"{Constants.MSG_FAILURE} An error occurred while retrieving books";
 
                 Console.WriteLine($"An error occurred while retrieving books: {ex.Message}");
             }
 
-            return (ModelResult<T>)_modelResult;
+            return (ResultDto<T>)_ResultDto;
 
         }
     }
