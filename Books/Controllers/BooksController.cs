@@ -1,10 +1,10 @@
 ﻿using Asp.Versioning;
 using Books.Application.Layer.DTOs;
-using Books.Application.Layer.Querys.GetAllBooks;
-using Books.Application.Layer.Querys.GetBookByauthor;
-using Books.Application.Layer.Querys.GetBookById;
-using Books.Application.Layer.Querys.GetBookByTitle;
-using Books.Application.Layer.Querys.GetBooksByCategory;
+using Books.Application.Layer.Querys.Books.GetAllBooks;
+using Books.Application.Layer.Querys.Books.GetBookByAuthor;
+using Books.Application.Layer.Querys.Books.GetBookById;
+using Books.Application.Layer.Querys.Books.GetBookByTitle;
+using Books.Application.Layer.Querys.Books.GetBooksByCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

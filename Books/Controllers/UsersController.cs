@@ -3,8 +3,10 @@ using Asp.Versioning;
 using Books.Application.Layer.DTOs;
 using Books.Domain.Layer.Entitys;
 using MediatR;
-using Books.Application.Layer.Querys.Users;
 using Books.Domain.Layer.Constants;
+using Books.Application.Layer.Command.Users.CreateUser;
+using Books.Application.Layer.Querys.Users.LoginUserQuery;
+using Books.Application.Layer.Querys.Users.LogoutUser;
 
 namespace BooksPresentation.Controllers
 {

@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Books.Application.Layer.DTOs;
 using Books.Domain.Layer.Entitys;
 using MediatR;
-using Books.Application.Layer.Querys.Reviews;
+using Books.Application.Layer.Command.Reviews.AddReview;
+using Books.Application.Layer.Command.Reviews.UpdateReview;
+using Books.Application.Layer.Querys.Reviews.GetReviewsByUser;
+using Books.Application.Layer.Querys.Reviews.GetReviewsByBook;
 
 namespace BooksPresentation.Controllers
 {

@@ -5,7 +5,7 @@ using Books.Application.Layer.Services;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Books.Application.Layer.Command.Users
+namespace Books.Application.Layer.Command.Users.CreateUser
 {
     public class CreateUserCommand : IRequest<ResultDto<CustomUserProfile>>
     {
