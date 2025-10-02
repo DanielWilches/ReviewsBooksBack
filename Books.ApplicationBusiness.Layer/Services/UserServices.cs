@@ -1,15 +1,20 @@
-﻿using Books.ApplicationBusiness.Layer.Interfaces;
-using Books.EnterpriseBusiness.Layer.Constants;
-using Books.EnterpriseBusiness.Layer.Entitys;
-using Books.EnterpriseBusiness.Layer.Enums;
-using Books.EnterpriseBusiness.Layer.Models;
+﻿#region using directives
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Xml.Linq;
+#endregion
 
-namespace Books.ApplicationBusiness.Layer
+#region Project Usings
+using Books.Application.Layer.DTOs;
+using Books.Domain.Layer.Entitys;
+using Books.Domain.Layer.Enums;
+using Books.Domain.Layer.Interfaces;
+using Books.Domain.Layer.Constants;
+#endregion
+
+
+namespace Books.Application.Layer.Services
 {
     public class UserServices <T> where T : CustomUserProfile
     {

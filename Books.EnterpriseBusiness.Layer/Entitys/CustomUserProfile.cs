@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Books.EnterpriseBusiness.Layer.Entitys
+namespace Books.Domain.Layer.Entitys
 {
     public class CustomUserProfile
     {

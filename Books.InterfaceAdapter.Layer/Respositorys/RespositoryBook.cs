@@ -1,11 +1,11 @@
-﻿using Books.ApplicationBusiness.Layer.Interfaces;
-using Books.EnterpriseBusiness.Layer.Entitys;
+﻿using Books.Domain.Layer.Entitys;
+using Books.Domain.Layer.Interfaces;
+using Books.Infrastructure.Layer.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
 
 
-namespace Books.InterfaceAdapter.Layer.Respositorys
+namespace Books.Infrastructure.Layer.Respositorys
 {
     public class RespositoryBook(AppDbConext dbContext) : IRepository<BookEntity>
     {
