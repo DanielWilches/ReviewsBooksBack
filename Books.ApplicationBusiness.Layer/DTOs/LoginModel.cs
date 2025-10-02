@@ -1,5 +1,5 @@
 ﻿
-namespace Books.Domain.Layer.Models
+namespace Books.Application.Layer.DTOs
 {
     public class LoginModel
     {

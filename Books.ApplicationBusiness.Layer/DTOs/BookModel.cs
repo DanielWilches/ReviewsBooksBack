@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Books.Domain.Layer.Models
+namespace Books.Application.Layer.DTOs
 {
     public class BookModel
     {

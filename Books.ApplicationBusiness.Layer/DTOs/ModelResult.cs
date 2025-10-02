@@ -1,6 +1,6 @@
 ﻿using Books.Domain.Layer.Interfaces;
 
-namespace Books.Domain.Layer.Models
+namespace Books.Application.Layer.DTOs
 {
     public class ModelResult<T> : IModelResult<T>
     {

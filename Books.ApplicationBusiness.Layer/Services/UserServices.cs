@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 #endregion
 
 #region Project Usings
-using Books.Domain.Layer.Models;
+using Books.Application.Layer.DTOs;
 using Books.Domain.Layer.Entitys;
 using Books.Domain.Layer.Enums;
 using Books.Domain.Layer.Interfaces;
