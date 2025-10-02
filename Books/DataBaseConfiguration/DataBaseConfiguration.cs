@@ -15,16 +15,16 @@ namespace BooksPresentation.DataBaseConfiguration
                 if (environment == "Development")
                     options.UseNpgsql(
                         configuration.GetConnectionString(Constants.DEV_CONNECTION),
-                        b => b.MigrationsAssembly("Books.InterfaceAdapter.Layer"));
+                        b => b.MigrationsAssembly("Books.Infrastructure.Layer"));
 
                 else if (environment == "Production")
                     options.UseNpgsql(
                         configuration.GetConnectionString(Constants.DEV_CONNECTION),
-                        b => b.MigrationsAssembly("Books.InterfaceAdapter.Layer"));
+                        b => b.MigrationsAssembly("Books.Infrastructure.Layer"));
                 else
                     options.UseNpgsql(
                         configuration.GetConnectionString(Constants.DEV_CONNECTION),
-                        b => b.MigrationsAssembly("Books.InterfaceAdapter.Layer"));
+                        b => b.MigrationsAssembly("Books.Infrastructure.Layer"));
 
             });
         }

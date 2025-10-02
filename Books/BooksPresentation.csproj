@@ -26,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Books.ApplicationBusiness.Layer\Books.Application.Layer.csproj" />
     <ProjectReference Include="..\Books.EnterpriseBusiness.Layer\Books.Domain.Layer.csproj" />
-    <ProjectReference Include="..\Books.InterfaceAdapter.Layer\Books.Infrastructure.Layer.csproj" />
+    <ProjectReference Include="..\Books.Infrastructure.Layer\Books.Infrastructure.Layer.csproj" />
   </ItemGroup>
 
 </Project>
